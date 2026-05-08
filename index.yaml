@@ -1,0 +1,24 @@
+apiVersion: v1
+entries:
+  squid:
+  - apiVersion: v1
+    appVersion: v4.3.0
+    created: "2026-05-12T07:28:11.746349571Z"
+    description: Squid proxy helm chart
+    digest: bcccbfbe96f0a2e18766bb906a7ca1ee6a2fe0fa9e41588cfe43e553fb67ae4a
+    home: https://github.com/honestica/lifen-charts
+    keywords:
+    - squid
+    - proxy
+    maintainers:
+    - email: matthieu.paret@lifen.fr
+      name: mtparet
+    - email: fabien.poussin@lifen.fr
+      name: fpoussin
+    name: squid
+    sources:
+    - https://github.com/squid-cache/squid
+    urls:
+    - https://github.com/chickenandpork/helm-chart-squid/releases/download/squid-0.1.0/squid-0.1.0.tgz
+    version: 0.1.0
+generated: "2026-05-12T07:28:11.746357235Z"
