@@ -115,3 +115,10 @@ metrics:
       repository: boynux/squid-exporter
       tag: v1.9
       pullPolicy: IfNotPresent
+
+# Persistence configuration
+# Set this section to enable persistent cache storage via a PVC.
+# persistence:
+#   storageClass: "gp3-ephemeral"
+#   size: 10
+persistence: {}
