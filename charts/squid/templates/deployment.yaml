@@ -29,7 +29,7 @@ spec:
         # if there is a line in config map that starts with `cache_dir`
         # run `squid -z` which will create the cache structure on the filesystem
         - name: create-cache-dir
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
@@ -66,7 +66,6 @@ spec:
           - name: config-secret
             mountPath: /etc/squid/config
         {{- end }}
-        # Load the configuration files for nginx
           livenessProbe:
             tcpSocket:
               port: 3128
@@ -112,8 +111,13 @@ spec:
       - name: {{ template "squid.fullname" . }}-conf
         configMap:
           name: {{ template "squid.fullname" . }}-conf
-      - emptyDir: {}
-        name: cache
+      - name: cache
+    {{- if .Values.persistence }}
+        persistentVolumeClaim:
+          claimName: {{ template "squid.fullname" . }}-cache
+    {{- else }}
+        emptyDir: {}
+    {{- end }}
     {{- if .Values.configSecret }}
       - name: config-secret
         secret:
