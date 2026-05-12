@@ -11,10 +11,18 @@ apiVersionOverrides: {}
 image:
   # registry is not used, just for testing renovate
   registry: docker.io
-  repository: honestica/squid
-  tag: 4.69
+  #repository: honestica/squid
+  #tag: 4.69
+  repository: sameersbn/squid
+  tag: 3.5.27-2
   pullPolicy: IfNotPresent
   # imagePullSecrets:
+initContainer:
+  image:
+    registry: docker.io
+    repository: busybox
+    tag: 1.37.0-glibc
+    pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
@@ -112,6 +120,7 @@ metrics:
     port: 9301
     resources: {}
     image:
+      registry: docker.io
       repository: boynux/squid-exporter
       tag: v1.9
       pullPolicy: IfNotPresent
