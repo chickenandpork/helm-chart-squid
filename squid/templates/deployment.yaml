@@ -29,8 +29,8 @@ spec:
         # if there is a line in config map that starts with `cache_dir`
         # run `squid -z` which will create the cache structure on the filesystem
         - name: create-cache-dir
-          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ .Values.initContainer.image.registry }}/{{ .Values.initContainer.image.repository }}:{{ .Values.initContainer.image.tag }}"
+          imagePullPolicy: {{ .Values.initContainer.image.pullPolicy }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
@@ -50,7 +50,7 @@ spec:
               squid -z --foreground 2>&1
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.registry }}/{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
           - name: http
@@ -80,7 +80,7 @@ spec:
 {{ toYaml .Values.resources | indent 12 }}
 {{- if .Values.metrics.enabled }}
         - name: exporter
-          image: "{{ .Values.metrics.exporter.image.repository }}:{{ .Values.metrics.exporter.image.tag }}"
+          image: "{{ .Values.metrics.exporter.image.registry }}/{{ .Values.metrics.exporter.image.repository }}:{{ .Values.metrics.exporter.image.tag }}"
           imagePullPolicy: {{ .Values.metrics.exporter.image.pullPolicy }}
           env:
           - name: SQUID_HOSTNAME
